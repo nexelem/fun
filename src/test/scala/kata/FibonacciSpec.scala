@@ -5,13 +5,7 @@ import org.specs2.specification.AllExpectations
 
 class FibonacciSpec extends Specification {
 
-  case class FibonacciNumber(previous: Long, current: Long) {
-    lazy val next = FibonacciNumber(current, previous + current)
-  }
-
-  object One extends FibonacciNumber(0, 1)
-
-  lazy val fibonacci: Stream[Long] = Stream.iterate[FibonacciNumber](One)(number => number.next).map(_.current)
+  lazy val fibonacci: Stream[Long] = ???
 
   "fibbonacci" should {
     Seq(
