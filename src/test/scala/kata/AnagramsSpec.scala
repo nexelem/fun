@@ -7,9 +7,23 @@ class AnagramsSpec extends Specification {
   /**
    * Implement me here
    */
-  def anagramsFor(input: Seq[String]): Set[Set[String]] = ???
+  def anagramsFor(input: Seq[String]): Set[Set[String]] = {
+    val setOfAnagrams = input.toSet.groupBy((word: String) => word.sorted).values.toSet
+    setOfAnagrams.filter(_.size > 1)
+  }
 
   "anagram finder" should {
+
+    "find all anagrams in extremely short list" in {
+      val anagrams = anagramsFor(Seq("rots", "sort", "NOT"))
+
+      anagrams must containAllOf(
+        Seq(
+          Set("rots", "sort")
+        )
+      )
+    }
+
     "find all anagrams in short list" in {
       val anagrams = anagramsFor(Seq("kinship", "pinkish", "enlist", "inlets", "listen", "silent", "boaster", "boaters", "borates", "fresher", "refresh", "sinks", "skins", "knits", "stink", "rots", "sort", "NOT"))
 
@@ -32,15 +46,13 @@ class AnagramsSpec extends Specification {
       }
       val allAnagrams: Set[Set[String]] = anagramsFor(lines("wordlist.txt"))
 
+      allAnagrams.take(10).foreach(println)
+
       allAnagrams.size must beEqualTo(20683)
-      allAnagrams must containAllOf(
-        Seq(
-            Set("crepitus", "cuprites", "pictures", "piecrust"),
-            Set("paste", "pates", "peats", "septa", "spate", "tapes", "tepas"),
-            Set("punctilio", "unpolitic"),
-            Set("sunders", "undress")
-        )
-      )
+      allAnagrams.contains(Set("crepitus", "cuprites", "pictures", "piecrust")) must beTrue
+      allAnagrams.contains(Set("paste", "pates", "peats", "septa", "spate", "tapes", "tepas")) must beTrue
+      allAnagrams.contains(Set("punctilio", "unpolitic")) must beTrue
+      allAnagrams.contains(Set("sunders", "undress")) must beTrue
     }
   }
 
