@@ -144,7 +144,6 @@ class ScalaCheatSheet extends Specification {
       doubledNumbersStream(200) must beEqualTo(BigInt("1606938044258990275541962092341162602522202993782792835301376"))
     }
 
-
     "use recursion with optional tailrec" in {
       @tailrec
       def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
@@ -153,6 +152,14 @@ class ScalaCheatSheet extends Specification {
 
       gcd(10, 22) must beEqualTo(2)
       factorial(7) must beEqualTo(5040)
+    }
+
+    "use case classes" in {
+      case class Person(name: String)
+
+      Person("Ken") must beEqualTo(Person("Ken"))
+      Person("Ken").copy(name="Barbie") must beEqualTo(Person("Barbie"))
+      Person("Ken").name must beEqualTo("Ken")
     }
 
 
